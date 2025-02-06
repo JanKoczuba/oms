@@ -1,13 +1,14 @@
 package main
 
 import (
+	common "github.com/JanKoczuba/commons"
+	_ "github.com/joho/godotenv/autoload"
 	"log"
 	"net/http"
 )
 
-// TODO add env variable
-const (
-	httpAddr = ":8080"
+var (
+	httpAddr = common.EnvString("HTTP_ADDR", ":8080")
 )
 
 func main() {
