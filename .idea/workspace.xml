@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd80be71-0ad4-40fe-8065-cefa49f289e3" name="Changes" comment="added basic gateway structure">
-      <change afterPath="$PROJECT_DIR$/common/env.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/main.go" afterDir="false" />
+    <list default="true" id="bd80be71-0ad4-40fe-8065-cefa49f289e3" name="Changes" comment="added basic order grpc connection">
+      <change afterPath="$PROJECT_DIR$/common/errors.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/http_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/http_handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orders/grpc_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/grpc_handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orders/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orders/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orders/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/types.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,21 +34,21 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "JanKoczuba"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;JanKoczuba&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/JanKoczuba/oms.git",
-    "accountId": "4e8240b3-f29b-4d92-9e4f-2e8bbe703336"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/JanKoczuba/oms.git&quot;,
+    &quot;accountId&quot;: &quot;4e8240b3-f29b-4d92-9e4f-2e8bbe703336&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2sf9r7JQ8xxzl37bZIFpUzJv5t1" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -54,6 +59,7 @@
   "keyToString": {
     "DefaultGoTemplateProperty": "Go File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
@@ -62,9 +68,15 @@
     "last_opened_file_path": "/Users/koczuba",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm"
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.goide.configuration.GoLibrariesConfigurableProvider"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/common" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -94,7 +106,10 @@
     <MESSAGE value="added basic structure" />
     <MESSAGE value="added basic orders structure" />
     <MESSAGE value="added basic gateway structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="added basic gateway structure" />
+    <MESSAGE value="added gateway .env, air config" />
+    <MESSAGE value="added oms proto" />
+    <MESSAGE value="added basic order grpc connection" />
+    <option name="LAST_COMMIT_MESSAGE" value="added basic order grpc connection" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
