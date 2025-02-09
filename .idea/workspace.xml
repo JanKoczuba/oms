@@ -4,17 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd80be71-0ad4-40fe-8065-cefa49f289e3" name="Changes" comment="fixed typo">
-      <change afterPath="$PROJECT_DIR$/common/discovery/consul/consul.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/discovery/discovery.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/discovery/grpc.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/gateway/gateway.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/gateway/grpc.go" afterDir="false" />
+    <list default="true" id="bd80be71-0ad4-40fe-8065-cefa49f289e3" name="Changes" comment="added rabbitmq">
+      <change afterPath="$PROJECT_DIR$/common/broker/events.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/broker/rabbitmq.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/common/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/http_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/http_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orders/grpc_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/grpc_handler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/orders/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -123,7 +119,9 @@
     <MESSAGE value="added basic order grpc connection" />
     <MESSAGE value="added basic order validation" />
     <MESSAGE value="fixed typo" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed typo" />
+    <MESSAGE value="added service discovery" />
+    <MESSAGE value="added rabbitmq" />
+    <option name="LAST_COMMIT_MESSAGE" value="added rabbitmq" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
