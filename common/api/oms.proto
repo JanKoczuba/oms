@@ -13,13 +13,13 @@ message ItemsWithQuantity {
 }
 
 message CreateOrderRequest {
-  string CustomerId = 1;
+  string CustomerID = 1;
   repeated ItemsWithQuantity Items = 2;
 }
 
 message Order {
   string ID = 1;
-  string CustomerId = 2;
+  string CustomerID = 2;
   string Status = 3;
   repeated Item Items = 4;
 }
