@@ -4,22 +4,23 @@ import (
 	"errors"
 	common "github.com/JanKoczuba/commons"
 	pb "github.com/JanKoczuba/commons/api"
+	"github.com/JanKoczuba/oms-gateway/gateway"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"net/http"
 )
 
 type handler struct {
-	client pb.OrderServiceClient
+	gateway gateway.OrdersGateway
 }
 
-func NewHandler(client pb.OrderServiceClient,
+func NewHandler(gateway gateway.OrdersGateway,
 ) *handler {
-	return &handler{client}
+	return &handler{gateway}
 }
 
 func (h *handler) registerRoutes(mux *http.ServeMux) {
-	mux.HandleFunc("POST /api/customents/{customerID}/orders", func(writer http.ResponseWriter, request *http.Request) {})
+	mux.HandleFunc("POST /api/customers/{customerID}/orders", func(writer http.ResponseWriter, request *http.Request) {})
 }
 
 func (h *handler) HandleCreateOrder(w http.ResponseWriter, r *http.Request) {
@@ -37,10 +38,11 @@ func (h *handler) HandleCreateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	order, err := h.client.CreateOrder(r.Context(), &pb.CreateOrderRequest{
-		CustomerId: customerID,
+	order, err := h.gateway.CreateOrder(r.Context(), &pb.CreateOrderRequest{
+		CustomerID: customerID,
 		Items:      items,
 	})
+
 	rStatus := status.Convert(err)
 	if rStatus != nil {
 		if rStatus.Code() != codes.InvalidArgument {

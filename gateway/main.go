@@ -1,31 +1,50 @@
 package main
 
 import (
+	"context"
 	common "github.com/JanKoczuba/commons"
-	pb "github.com/JanKoczuba/commons/api"
+	"github.com/JanKoczuba/commons/discovery"
+	"github.com/JanKoczuba/commons/discovery/consul"
+	"github.com/JanKoczuba/oms-gateway/gateway"
 	_ "github.com/joho/godotenv/autoload"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 	"log"
 	"net/http"
+	"time"
 )
 
 var (
-	httpAddr         = common.EnvString("HTTP_ADDR", ":8080")
-	orderServiceAddr = "localhost:3000"
+	serviceName = "gateway"
+	httpAddr    = common.EnvString("HTTP_ADDR", ":8080")
+	consulAddr  = common.EnvString("CONSUL_ADDR", "localhost:8500")
 )
 
 func main() {
-	conn, err := grpc.NewClient(orderServiceAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	registry, err := consul.NewRegistry(consulAddr, serviceName)
 	if err != nil {
-		log.Fatalf("Failed to make new client: %v", err)
+		panic(err)
 	}
-	defer conn.Close()
 
-	c := pb.NewOrderServiceClient(conn)
+	ctx := context.Background()
+	instanceID := discovery.GenerateInstanceID(serviceName)
+	if err := registry.Register(ctx, instanceID, serviceName, httpAddr); err != nil {
+		panic(err)
+	}
+
+	go func() {
+		for {
+			if err := registry.HealthCheck(instanceID, serviceName); err != nil {
+				log.Printf("health check failed: %v", err)
+			}
+			time.Sleep(2 * time.Second)
+		}
+	}()
+	defer registry.Deregister(ctx, instanceID, serviceName)
 
 	mux := http.NewServeMux()
-	handler := NewHandler(c)
+
+	ordersGateway := gateway.NewGRPCGateway(registry)
+
+	handler := NewHandler(ordersGateway)
 	handler.registerRoutes(mux)
 
 	if err := http.ListenAndServe(httpAddr, mux); err != nil {
