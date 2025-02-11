@@ -61,7 +61,7 @@ func main() {
 	svc := newService(store)
 	NewGrpcHandler(grpcServer, svc, ch)
 
-	svc.CreateOrder(context.Background())
+	//svc.CreateOrder(context.Background())
 
 	if err := grpcServer.Serve(l); err != nil {
 		log.Fatalf(err.Error())

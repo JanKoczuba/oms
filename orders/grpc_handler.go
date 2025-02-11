@@ -31,8 +31,9 @@ func (h *grpcHandler) CreateOrder(ctx context.Context, p *pb.CreateOrderRequest)
 		log.Fatal(err)
 	}
 
-	o := &pb.Order{
-		ID: "42",
+	o, err := h.service.CreateOrder(ctx, p)
+	if err != nil {
+		return nil, err
 	}
 
 	marshalledOrder, err := json.Marshal(o)
@@ -46,5 +47,5 @@ func (h *grpcHandler) CreateOrder(ctx context.Context, p *pb.CreateOrderRequest)
 		DeliveryMode: amqp.Persistent,
 	})
 
-	return nil, nil
+	return o, nil
 }

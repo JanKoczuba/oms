@@ -20,7 +20,7 @@ func NewHandler(gateway gateway.OrdersGateway,
 }
 
 func (h *handler) registerRoutes(mux *http.ServeMux) {
-	mux.HandleFunc("POST /api/customers/{customerID}/orders", func(writer http.ResponseWriter, request *http.Request) {})
+	mux.HandleFunc("POST /api/customers/{customerID}/orders", h.HandleCreateOrder)
 }
 
 func (h *handler) HandleCreateOrder(w http.ResponseWriter, r *http.Request) {
