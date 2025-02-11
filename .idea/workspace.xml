@@ -4,18 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd80be71-0ad4-40fe-8065-cefa49f289e3" name="Changes" comment="added basic payment structure">
-      <change afterPath="$PROJECT_DIR$/payments/processor/processor.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payments/processor/stripe/stripe.go" afterDir="false" />
+    <list default="true" id="bd80be71-0ad4-40fe-8065-cefa49f289e3" name="Changes" comment="added basic stripe processor implementation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/http_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/http_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orders/grpc_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/grpc_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orders/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orders/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orders/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/types.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payments/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/payments/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payments/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/payments/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payments/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/payments/service.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +117,8 @@
     <MESSAGE value="added service discovery" />
     <MESSAGE value="added rabbitmq" />
     <MESSAGE value="added basic payment structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="added basic payment structure" />
+    <MESSAGE value="added basic stripe processor implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="added basic stripe processor implementation" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
