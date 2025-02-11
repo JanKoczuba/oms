@@ -15,14 +15,25 @@ func newService(store OrdersStore) *service {
 	return &service{store}
 }
 
-func (s *service) CreateOrder(ctx context.Context, p *pb.CreateOrderRequest) (*pb.Order, error) {
-	items, err := s.ValidateOrder(ctx, p)
+func (s *service) GetOrder(ctx context.Context, p *pb.GetOrderRequest) (*pb.Order, error) {
+	o, err := s.store.Get(ctx, p.OrderID, p.CustomerID)
 	if err != nil {
 		return nil, err
 	}
+
+	return o, nil
+}
+
+func (s *service) CreateOrder(ctx context.Context, p *pb.CreateOrderRequest, items []*pb.Item) (*pb.Order, error) {
+
+	id, err := s.store.Create(ctx, p, items)
+	if err != nil {
+		return nil, err
+	}
+
 	//TODO remove hardcoded
 	o := &pb.Order{
-		ID:         "11",
+		ID:         id,
 		CustomerID: p.CustomerID,
 		Status:     "pending",
 		Items:      items,

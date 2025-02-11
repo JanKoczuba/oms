@@ -4,8 +4,18 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd80be71-0ad4-40fe-8065-cefa49f289e3" name="Changes" comment="added basic stripe processor implementation">
+    <list default="true" id="bd80be71-0ad4-40fe-8065-cefa49f289e3" name="Changes" comment="added basic stripe service test">
+      <change afterPath="$PROJECT_DIR$/gateway/public/cancel.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gateway/public/success.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/api/oms.proto" beforeDir="false" afterPath="$PROJECT_DIR$/common/api/oms.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/gateway/gateway.go" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/gateway/gateway.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/gateway/grpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/gateway/grpc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/http_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/http_handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orders/grpc_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/grpc_handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orders/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orders/store.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/store.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orders/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/types.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,28 +67,55 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/koczuba&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.goide.configuration.GoLibrariesConfigurableProvider&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "Go Test.TestService in github.com/JanKoczuba/oms-payments.executor": "Run",
+    "Makefile Target.gen.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "dev",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "/Users/koczuba",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.goide.configuration.GoLibrariesConfigurableProvider"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/payments/processor/stripe" />
       <recent name="$PROJECT_DIR$/common" />
     </key>
+  </component>
+  <component name="RunManager" selected="Makefile Target.gen">
+    <configuration name="TestService in github.com/JanKoczuba/oms-payments" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="oms" />
+      <working_directory value="$PROJECT_DIR$/payments" />
+      <kind value="PACKAGE" />
+      <package value="github.com/JanKoczuba/oms-payments" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestService\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="gen" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/common/Makefile" target="gen" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Makefile Target.gen" />
+        <item itemvalue="Go Test.TestService in github.com/JanKoczuba/oms-payments" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -118,7 +155,8 @@
     <MESSAGE value="added rabbitmq" />
     <MESSAGE value="added basic payment structure" />
     <MESSAGE value="added basic stripe processor implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="added basic stripe processor implementation" />
+    <MESSAGE value="added basic stripe service test" />
+    <option name="LAST_COMMIT_MESSAGE" value="added basic stripe service test" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
