@@ -4,18 +4,22 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd80be71-0ad4-40fe-8065-cefa49f289e3" name="Changes" comment="added basic stripe service test">
-      <change afterPath="$PROJECT_DIR$/gateway/public/cancel.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/public/success.html" afterDir="false" />
+    <list default="true" id="bd80be71-0ad4-40fe-8065-cefa49f289e3" name="Changes" comment="added payment service">
+      <change afterPath="$PROJECT_DIR$/common/discovery/inmem/inmem.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gateway/types.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payments/gateway/gateway.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payments/gateway/grpc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payments/http_handler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/api/oms.proto" beforeDir="false" afterPath="$PROJECT_DIR$/common/api/oms.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/gateway/gateway.go" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/gateway/gateway.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/gateway/grpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/gateway/grpc.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway/http_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/http_handler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/orders/grpc_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/grpc_handler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/orders/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/orders/store.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/store.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/orders/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/payments/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/payments/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/service_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/payments/service_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +59,7 @@
   &quot;isMigrated&quot;: true
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
     <option name="showPreview" value="true" />
   </component>
   <component name="ProjectColorInfo">{
@@ -92,7 +96,7 @@
       <recent name="$PROJECT_DIR$/common" />
     </key>
   </component>
-  <component name="RunManager" selected="Makefile Target.gen">
+  <component name="RunManager" selected="Go Test.TestService in github.com/JanKoczuba/oms-payments">
     <configuration name="TestService in github.com/JanKoczuba/oms-payments" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="oms" />
       <working_directory value="$PROJECT_DIR$/payments" />
@@ -112,8 +116,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Makefile Target.gen" />
         <item itemvalue="Go Test.TestService in github.com/JanKoczuba/oms-payments" />
+        <item itemvalue="Makefile Target.gen" />
       </list>
     </recent_temporary>
   </component>
@@ -156,7 +160,9 @@
     <MESSAGE value="added basic payment structure" />
     <MESSAGE value="added basic stripe processor implementation" />
     <MESSAGE value="added basic stripe service test" />
-    <option name="LAST_COMMIT_MESSAGE" value="added basic stripe service test" />
+    <MESSAGE value="added get order endpoint" />
+    <MESSAGE value="added payment service" />
+    <option name="LAST_COMMIT_MESSAGE" value="added payment service" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

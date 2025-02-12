@@ -3,7 +3,9 @@ package main
 import (
 	"context"
 	common "github.com/JanKoczuba/commons"
+	"github.com/JanKoczuba/oms-payments/gateway"
 	stripeProcessor "github.com/JanKoczuba/oms-payments/processor/stripe"
+	"net/http"
 
 	"github.com/JanKoczuba/commons/broker"
 	"github.com/JanKoczuba/commons/discovery"
@@ -17,14 +19,16 @@ import (
 )
 
 var (
-	serviceName = "payment"
-	amqpUser    = common.EnvString("RABBITMQ_USER", "guest")
-	amqpPass    = common.EnvString("RABBITMQ_PASS", "guest")
-	amqpHost    = common.EnvString("RABBITMQ_HOST", "localhost")
-	amqpPort    = common.EnvString("RABBITMQ_PORT", "5672")
-	grpcAddr    = common.EnvString("GRPC_ADDRESS", "localhost:2001")
-	consulAddr  = common.EnvString("CONSUL_ADDR", "localhost:8500")
-	stripeKey   = common.EnvString("STRIPE_KEY", "")
+	serviceName          = "payment"
+	amqpUser             = common.EnvString("RABBITMQ_USER", "guest")
+	amqpPass             = common.EnvString("RABBITMQ_PASS", "guest")
+	amqpHost             = common.EnvString("RABBITMQ_HOST", "localhost")
+	amqpPort             = common.EnvString("RABBITMQ_PORT", "5672")
+	grpcAddr             = common.EnvString("GRPC_ADDRESS", "localhost:2001")
+	consulAddr           = common.EnvString("CONSUL_ADDR", "localhost:8500")
+	stripeKey            = common.EnvString("STRIPE_KEY", "")
+	httpAddr             = common.EnvString("HTTP_ADDR", "localhost:8081")
+	endpointStripeSecret = common.EnvString("STRIPE_ENDPOINT_SECRET", "whsec_...")
 )
 
 func main() {
@@ -64,10 +68,24 @@ func main() {
 
 	stripeProcessor := stripeProcessor.NewProcessor()
 
-	svc := NewService(stripeProcessor)
+	gateway := gateway.NewGateway(registry)
+
+	svc := NewService(stripeProcessor, gateway)
 
 	amqpConsumer := NewConsumer(svc)
 	go amqpConsumer.Listen(ch)
+
+	//http server
+	mux := http.NewServeMux()
+	httpServer := NewPaymentHTTPHandler(ch)
+	httpServer.registerRoutes(mux)
+
+	go func() {
+		log.Printf("Starting HTTP server at %s", httpAddr)
+		if err := http.ListenAndServe(httpAddr, mux); err != nil {
+			log.Fatal("failed to start http server")
+		}
+	}()
 
 	// gRPC server
 	grpcServer := grpc.NewServer()
