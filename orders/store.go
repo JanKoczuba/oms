@@ -2,48 +2,63 @@ package main
 
 import (
 	"context"
-	"errors"
 	pb "github.com/JanKoczuba/commons/api"
+	"go.mongodb.org/mongo-driver/v2/bson"
+	"go.mongodb.org/mongo-driver/v2/mongo"
+	"log"
 )
 
-var orders = make([]*pb.Order, 0)
+const (
+	DbName   = "orders"
+	CollName = "orders"
+)
 
 type store struct {
-	// add mongoDB instance
+	db *mongo.Client
 }
 
-func NewStore() *store {
-	return &store{}
+func NewStore(db *mongo.Client,
+) *store {
+	return &store{db}
 }
 
-func (s *store) Create(ctx context.Context, p *pb.CreateOrderRequest, items []*pb.Item) (string, error) {
-	orders = append(orders, &pb.Order{
-		ID:          "22",
-		CustomerID:  p.CustomerID,
-		Status:      "pending",
-		Items:       items,
-		PaymentLink: "",
-	})
-	return "22", nil
+func (s *store) Create(ctx context.Context, o Order) (bson.ObjectID, error) {
+	col := s.db.Database(DbName).Collection(CollName)
+
+	newOrder, err := col.InsertOne(ctx, o)
+
+	id := newOrder.InsertedID.(bson.ObjectID)
+	return id, err
 }
 
-func (s *store) Get(ctx context.Context, id, customerID string) (*pb.Order, error) {
-	for _, o := range orders {
-		if o.ID == id && o.CustomerID == customerID {
-			return o, nil
-		}
-	}
-	return nil, errors.New("order not found")
+func (s *store) Get(ctx context.Context, id, customerID string) (*Order, error) {
+	col := s.db.Database(DbName).Collection(CollName)
+
+	oID, _ := bson.ObjectIDFromHex(id)
+
+	var o Order
+	err := col.FindOne(ctx, bson.M{
+		"_id":        oID,
+		"customerID": customerID,
+	}).Decode(&o)
+
+	return &o, err
 }
 
 func (s *store) Update(ctx context.Context, id string, newOrder *pb.Order) error {
-	for i, o := range orders {
-		if o.ID == id {
-			orders[i].Status = o.Status
-			orders[i].PaymentLink = o.PaymentLink
-			return nil
-		}
-	}
+	col := s.db.Database(DbName).Collection(CollName)
 
-	return nil
+	oID, _ := bson.ObjectIDFromHex(id)
+
+	log.Printf("oid: %s", oID)
+	log.Printf("id: %s", id)
+
+	_, err := col.UpdateOne(ctx,
+		bson.M{"_id": oID},
+		bson.M{"$set": bson.M{
+			"paymentLink": newOrder.PaymentLink,
+			"status":      newOrder.Status,
+		}})
+
+	return err
 }

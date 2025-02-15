@@ -32,19 +32,22 @@ func (s *service) GetOrder(ctx context.Context, p *pb.GetOrderRequest) (*pb.Orde
 		return nil, err
 	}
 
-	return o, nil
+	return o.ToProto(), nil
 }
 
 func (s *service) CreateOrder(ctx context.Context, p *pb.CreateOrderRequest, items []*pb.Item) (*pb.Order, error) {
-
-	id, err := s.store.Create(ctx, p, items)
+	id, err := s.store.Create(ctx, Order{
+		CustomerID:  p.CustomerID,
+		Status:      "pending",
+		Items:       items,
+		PaymentLink: "",
+	})
 	if err != nil {
 		return nil, err
 	}
 
-	//TODO remove hardcoded
 	o := &pb.Order{
-		ID:         id,
+		ID:         id.Hex(),
 		CustomerID: p.CustomerID,
 		Status:     "pending",
 		Items:      items,
