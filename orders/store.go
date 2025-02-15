@@ -5,7 +5,6 @@ import (
 	pb "github.com/JanKoczuba/commons/api"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
-	"log"
 )
 
 const (
@@ -49,9 +48,6 @@ func (s *store) Update(ctx context.Context, id string, newOrder *pb.Order) error
 	col := s.db.Database(DbName).Collection(CollName)
 
 	oID, _ := bson.ObjectIDFromHex(id)
-
-	log.Printf("oid: %s", oID)
-	log.Printf("id: %s", id)
 
 	_, err := col.UpdateOne(ctx,
 		bson.M{"_id": oID},
