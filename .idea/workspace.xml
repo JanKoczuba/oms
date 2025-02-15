@@ -4,22 +4,11 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd80be71-0ad4-40fe-8065-cefa49f289e3" name="Changes" comment="added payment service">
-      <change afterPath="$PROJECT_DIR$/common/discovery/inmem/inmem.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/types.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payments/gateway/gateway.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payments/gateway/grpc.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payments/http_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/api/oms.proto" beforeDir="false" afterPath="$PROJECT_DIR$/common/api/oms.proto" afterDir="false" />
+    <list default="true" id="bd80be71-0ad4-40fe-8065-cefa49f289e3" name="Changes" comment="added send telemetry data from gateway">
+      <change afterPath="$PROJECT_DIR$/orders/telemetry.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway/http_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/http_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orders/grpc_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/grpc_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orders/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orders/store.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/store.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orders/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/types.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payments/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/payments/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payments/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/payments/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payments/service_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/payments/service_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orders/ampq_consumer.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/ampq_consumer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orders/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/orders/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,25 +60,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultGoTemplateProperty": "Go File",
-    "Go Test.TestService in github.com/JanKoczuba/oms-payments.executor": "Run",
-    "Makefile Target.gen.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "git-widget-placeholder": "dev",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "/Users/koczuba",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.goide.configuration.GoLibrariesConfigurableProvider"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;Go Test.TestService in github.com/JanKoczuba/oms-payments.executor&quot;: &quot;Run&quot;,
+    &quot;Makefile Target.gen.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/koczuba&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.goide.configuration.GoLibrariesConfigurableProvider&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/payments/processor/stripe" />
@@ -162,7 +151,9 @@
     <MESSAGE value="added basic stripe service test" />
     <MESSAGE value="added get order endpoint" />
     <MESSAGE value="added payment service" />
-    <option name="LAST_COMMIT_MESSAGE" value="added payment service" />
+    <MESSAGE value="added retries" />
+    <MESSAGE value="added send telemetry data from gateway" />
+    <option name="LAST_COMMIT_MESSAGE" value="added send telemetry data from gateway" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

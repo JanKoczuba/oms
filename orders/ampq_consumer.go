@@ -4,12 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
-
 	pb "github.com/JanKoczuba/commons/api"
 	"github.com/JanKoczuba/commons/broker"
 	amqp "github.com/rabbitmq/amqp091-go"
 	"go.opentelemetry.io/otel"
+	"log"
 )
 
 type consumer struct {
@@ -18,6 +17,7 @@ type consumer struct {
 
 func NewConsumer(service OrdersService) *consumer {
 	return &consumer{service}
+
 }
 
 func (c *consumer) Listen(ch *amqp.Channel) {

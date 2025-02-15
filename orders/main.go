@@ -65,9 +65,12 @@ func main() {
 
 	store := NewStore()
 	svc := newService(store)
-	NewGrpcHandler(grpcServer, svc, ch)
+	svcWithTelemetry := NewTelemetryMiddleware(svc)
 
-	//svc.CreateOrder(context.Background())
+	NewGrpcHandler(grpcServer, svcWithTelemetry, ch)
+
+	consumer := NewConsumer(svcWithTelemetry)
+	go consumer.Listen(ch)
 
 	if err := grpcServer.Serve(l); err != nil {
 		log.Fatalf(err.Error())
