@@ -42,8 +42,10 @@ func (c *consumer) Listen(ch *amqp.Channel) {
 		for d := range msgs {
 			log.Printf("Received message: %s", d.Body)
 
+			ctx := broker.ExtractAMQPHeader(context.Background(), d.Headers)
+
 			tr := otel.Tracer("amqp")
-			_, messageSpan := tr.Start(context.Background(), fmt.Sprintf("AMQP - consume - %s", q.Name))
+			_, messageSpan := tr.Start(ctx, fmt.Sprintf("AMQP - consume - %s", q.Name))
 
 			o := &pb.Order{}
 			if err := json.Unmarshal(d.Body, o); err != nil {
@@ -52,7 +54,7 @@ func (c *consumer) Listen(ch *amqp.Channel) {
 				continue
 			}
 
-			_, err := c.service.UpdateOrder(context.Background(), o)
+			_, err := c.service.UpdateOrder(ctx, o)
 			if err != nil {
 
 				if err := broker.HandleRetry(ch, &d); err != nil {

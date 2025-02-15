@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	pb "github.com/JanKoczuba/commons/api"
 	"github.com/JanKoczuba/commons/broker"
 	amqp "github.com/rabbitmq/amqp091-go"
+	"go.opentelemetry.io/otel"
 	"log"
 )
 
@@ -32,6 +34,10 @@ func (c *consumer) Listen(ch *amqp.Channel) {
 
 	go func() {
 		for d := range msgs {
+			ctx := broker.ExtractAMQPHeader(context.Background(), d.Headers)
+
+			tr := otel.Tracer("amqp")
+			_, messageSpan := tr.Start(ctx, fmt.Sprintf("AMQP - consume - %s", q.Name))
 
 			o := &pb.Order{}
 			if err := json.Unmarshal(d.Body, o); err != nil {
@@ -52,6 +58,9 @@ func (c *consumer) Listen(ch *amqp.Channel) {
 
 				continue
 			}
+
+			messageSpan.AddEvent(fmt.Sprintf("payment.created: %s", paymentLink))
+			messageSpan.End()
 
 			log.Printf("Payment link created %s", paymentLink)
 			d.Ack(false)

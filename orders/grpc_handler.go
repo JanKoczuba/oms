@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	pb "github.com/JanKoczuba/commons/api"
 	"github.com/JanKoczuba/commons/broker"
 	amqp "github.com/rabbitmq/amqp091-go"
+	"go.opentelemetry.io/otel"
 	"google.golang.org/grpc"
 	"log"
 )
@@ -39,12 +41,16 @@ func (h *grpcHandler) CreateOrder(ctx context.Context, p *pb.CreateOrderRequest)
 		log.Fatal(err)
 	}
 
-	items, err := h.service.ValidateOrder(ctx, p)
+	tr := otel.Tracer("amqp")
+	amqpContext, messageSpan := tr.Start(ctx, fmt.Sprintf("AMQP - publish - %s", q.Name))
+	defer messageSpan.End()
+
+	items, err := h.service.ValidateOrder(amqpContext, p)
 	if err != nil {
 		return nil, err
 	}
 
-	o, err := h.service.CreateOrder(ctx, p, items)
+	o, err := h.service.CreateOrder(amqpContext, p, items)
 	if err != nil {
 		return nil, err
 	}
@@ -54,10 +60,13 @@ func (h *grpcHandler) CreateOrder(ctx context.Context, p *pb.CreateOrderRequest)
 		return nil, err
 	}
 
-	h.channel.PublishWithContext(ctx, "", q.Name, false, false, amqp.Publishing{
+	headers := broker.InjectAMQPHeaders(amqpContext)
+
+	h.channel.PublishWithContext(amqpContext, "", q.Name, false, false, amqp.Publishing{
 		ContentType:  "application/json",
 		Body:         marshalledOrder,
 		DeliveryMode: amqp.Persistent,
+		Headers:      headers,
 	})
 
 	return o, nil

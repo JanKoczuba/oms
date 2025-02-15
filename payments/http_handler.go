@@ -31,6 +31,7 @@ func (h *PaymentHTTPHandler) registerRoutes(router *http.ServeMux) {
 }
 
 func (h *PaymentHTTPHandler) handleCheckoutWebhook(w http.ResponseWriter, r *http.Request) {
+
 	const MaxBodyBytes = int64(65536)
 	r.Body = http.MaxBytesReader(w, r.Body, MaxBodyBytes)
 
@@ -48,6 +49,8 @@ func (h *PaymentHTTPHandler) handleCheckoutWebhook(w http.ResponseWriter, r *htt
 		w.WriteHeader(http.StatusBadRequest) // Return a 400 error on a bad signature
 		return
 	}
+
+	log.Printf("Received webhook event: %s\n", event)
 
 	if event.Type == "checkout.session.completed" {
 		var session stripe.CheckoutSession
@@ -82,11 +85,14 @@ func (h *PaymentHTTPHandler) handleCheckoutWebhook(w http.ResponseWriter, r *htt
 			amqpContext, messageSpan := tr.Start(ctx, fmt.Sprintf("AMQP - publish - %s", broker.OrderPaidEvent))
 			defer messageSpan.End()
 
+			headers := broker.InjectAMQPHeaders(amqpContext)
+
 			// publish a message
 			h.channel.PublishWithContext(amqpContext, broker.OrderPaidEvent, "", false, false, amqp.Publishing{
 				ContentType:  "application/json",
 				Body:         marshalledOrder,
 				DeliveryMode: amqp.Persistent,
+				Headers:      headers,
 			})
 
 			log.Println("Message published order.paid")
