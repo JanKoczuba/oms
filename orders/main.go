@@ -6,6 +6,7 @@ import (
 	"github.com/JanKoczuba/commons/broker"
 	"github.com/JanKoczuba/commons/discovery"
 	"github.com/JanKoczuba/commons/discovery/consul"
+	"github.com/JanKoczuba/oms-orders/gateway"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"net"
@@ -67,8 +68,10 @@ func main() {
 	}
 	defer l.Close()
 
+	gateway := gateway.NewGateway(registry)
+
 	store := NewStore()
-	svc := newService(store)
+	svc := NewService(store, gateway)
 	svcWithTelemetry := NewTelemetryMiddleware(svc)
 	svcWithLogging := NewLoggingMiddleware(svcWithTelemetry)
 

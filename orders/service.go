@@ -4,15 +4,17 @@ import (
 	"context"
 	common "github.com/JanKoczuba/commons"
 	pb "github.com/JanKoczuba/commons/api"
-	"log"
+	"github.com/JanKoczuba/oms-orders/gateway"
 )
 
 type service struct {
-	store OrdersStore
+	store   OrdersStore
+	gateway gateway.StockGateway
 }
 
-func newService(store OrdersStore) *service {
-	return &service{store}
+func NewService(store OrdersStore, gateway gateway.StockGateway) *service {
+	return &service{store, gateway}
+
 }
 
 func (s *service) UpdateOrder(ctx context.Context, o *pb.Order) (*pb.Order, error) {
@@ -56,19 +58,17 @@ func (s *service) ValidateOrder(ctx context.Context, p *pb.CreateOrderRequest) (
 	}
 
 	mergedItems := mergeItemsQuantities(p.Items)
-	log.Print(mergedItems)
 
-	//TODO test only, remove after
-	var itemWithPrice []*pb.Item
-	for _, i := range mergedItems {
-		itemWithPrice = append(itemWithPrice, &pb.Item{
-			PriceID:  "price_1QrFEnB4QS5L2w5cEBWbOYEw",
-			ID:       i.ID,
-			Quantity: i.Quantity,
-		})
+	// validate with the stock service
+	inStock, items, err := s.gateway.CheckIfItemIsInStock(ctx, p.CustomerID, mergedItems)
+	if err != nil {
+		return nil, err
+	}
+	if !inStock {
+		return items, common.ErrNoStock
 	}
 
-	return itemWithPrice, nil
+	return items, nil
 }
 
 func mergeItemsQuantities(items []*pb.ItemsWithQuantity) []*pb.ItemsWithQuantity {
