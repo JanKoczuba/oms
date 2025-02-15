@@ -6,8 +6,8 @@ import (
 	"github.com/JanKoczuba/commons/broker"
 	"github.com/JanKoczuba/commons/discovery"
 	"github.com/JanKoczuba/commons/discovery/consul"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
-	"log"
 	"net"
 	"time"
 )
@@ -24,9 +24,13 @@ var (
 )
 
 func main() {
+	logger, _ := zap.NewProduction()
+	defer logger.Sync()
+
+	zap.ReplaceGlobals(logger)
 
 	if err := common.SetGlobalTracer(context.TODO(), serviceName, jaegerAddr); err != nil {
-		log.Fatal("could set global tracer", err)
+		logger.Fatal("could set global tracer", zap.Error(err))
 	}
 
 	registry, err := consul.NewRegistry(consulAddr, serviceName)
@@ -43,7 +47,7 @@ func main() {
 	go func() {
 		for {
 			if err := registry.HealthCheck(instanceID, serviceName); err != nil {
-				log.Printf("health check failed: %v", err)
+				logger.Error("health check failed", zap.Error(err))
 			}
 			time.Sleep(2 * time.Second)
 		}
@@ -59,20 +63,23 @@ func main() {
 
 	l, err := net.Listen("tcp", grpcAddr)
 	if err != nil {
-		log.Fatalf("failed to connect to grpc server: %v", err)
+		logger.Fatal("failed to connect to grpc server", zap.Error(err))
 	}
 	defer l.Close()
 
 	store := NewStore()
 	svc := newService(store)
 	svcWithTelemetry := NewTelemetryMiddleware(svc)
+	svcWithLogging := NewLoggingMiddleware(svcWithTelemetry)
 
-	NewGrpcHandler(grpcServer, svcWithTelemetry, ch)
+	NewGrpcHandler(grpcServer, svcWithLogging, ch)
 
 	consumer := NewConsumer(svcWithTelemetry)
 	go consumer.Listen(ch)
 
+	logger.Info("Starting HTTP server", zap.String("port", grpcAddr))
+
 	if err := grpcServer.Serve(l); err != nil {
-		log.Fatalf(err.Error())
+		logger.Fatal("", zap.Error(err))
 	}
 }
